@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tacaro_app/src/core/theme/app_theme.dart';
+import 'package:tacaro_app/src/modules/login/router/login_router.dart';
 import 'package:tacaro_app/src/modules/splash/router/splash_router.dart';
 
 class App extends StatelessWidget {
@@ -18,6 +19,7 @@ class App extends StatelessWidget {
       initialRoute: '/splash',
       routes: {
         '/splash': (context) => const SplashRouter(),
+        '/login': (context) => const LoginRouter(),
       },
     );
   }

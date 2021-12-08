@@ -6,14 +6,14 @@ abstract class AppTextStyle {
   TextStyle get label;
   TextStyle get input;
   TextStyle get hint;
-  TextStyle get buttonBackgroundColor;
+  TextStyle get buttonTextStyleColor;
   TextStyle get buttonBoldTextColor;
   TextStyle get buttonTextColor;
 }
 
 class AppTextStyleImpl implements AppTextStyle {
   @override
-  TextStyle get buttonBackgroundColor => GoogleFonts.inter(
+  TextStyle get buttonTextStyleColor => GoogleFonts.inter(
         fontSize: 14,
         color: AppTheme.colors.background,
         fontWeight: FontWeight.bold,
@@ -49,7 +49,7 @@ class AppTextStyleImpl implements AppTextStyle {
 
   @override
   TextStyle get label => GoogleFonts.inter(
-        fontSize: 16,
+        fontSize: 14,
         color: AppTheme.colors.textColor,
         fontWeight: FontWeight.bold,
       );
