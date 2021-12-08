@@ -1,4 +1,5 @@
 import 'package:tacaro_app/src/core/theme/app_colors.dart';
+import 'package:tacaro_app/src/core/theme/app_images.dart';
 import 'package:tacaro_app/src/core/theme/app_text_styles.dart';
 
 class AppTheme {
@@ -9,4 +10,7 @@ class AppTheme {
 
   final _textStyles = AppTextStyleImpl();
   static AppTextStyle get textStyles => instance._textStyles;
+
+  final _appImages = AppImagesImpl();
+  static AppImages get appImages => instance._appImages;
 }
