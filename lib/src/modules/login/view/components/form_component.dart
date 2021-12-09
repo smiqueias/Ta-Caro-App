@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tacaro_app/src/core/theme/app_theme.dart';
 import 'package:tacaro_app/src/utils/extensions/text_extension.dart';
 
@@ -24,9 +25,9 @@ class FormComponent extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(label).label,
-        const SizedBox(height: 12),
+        SizedBox(height: 12.h),
         SizedBox(
-          height: 47,
+          height: 55.h,
           child: TextFormField(
             onChanged: onChanged,
             validator: validator,
@@ -36,7 +37,7 @@ class FormComponent extends StatelessWidget {
               hintStyle: AppTheme.textStyles.hint,
               hintText: hintText,
               border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(10),
+                borderRadius: BorderRadius.circular(10.r),
                 borderSide: BorderSide(color: AppTheme.colors.border),
               ),
             ),

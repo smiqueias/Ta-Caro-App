@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tacaro_app/src/core/theme/app_theme.dart';
 import 'package:tacaro_app/src/utils/extensions/text_extension.dart';
 
@@ -12,10 +13,10 @@ class OutlineButtonComponent extends StatelessWidget {
     return InkWell(
       onTap: onTap,
       child: Container(
-        height: 58,
+        height: 60.h,
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(12.0),
-          border: Border.fromBorderSide(BorderSide(color: AppTheme.colors.border, width: 2)),
+          borderRadius: BorderRadius.circular(12.0.r),
+          border: Border.fromBorderSide(BorderSide(color: AppTheme.colors.border, width: 2.w)),
           color: AppTheme.colors.background,
         ),
         child: Center(

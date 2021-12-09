@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tacaro_app/src/core/components/button_component.dart';
 import 'package:tacaro_app/src/core/theme/app_theme.dart';
 import 'package:tacaro_app/src/modules/login/view/components/form_component.dart';
@@ -17,20 +18,20 @@ class CreateAccountScreen extends StatelessWidget {
       ),
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 30.0, vertical: 38.0),
+          padding: EdgeInsets.symmetric(horizontal: 30.0.w, vertical: 38.0.h),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const Text("Criando uma conta").title,
-              const SizedBox(height: 10.0),
+              SizedBox(height: 10.0.h),
               const Text("Mantenha seus gastos em dia").subTitle,
-              const SizedBox(height: 38.0),
+              SizedBox(height: 38.0.h),
               const FormComponent(label: "NOME", hintText: "Seu nome"),
-              const SizedBox(height: 18.0),
+              SizedBox(height: 18.0.h),
               const FormComponent(label: "EMAIL", hintText: "email@email.com"),
-              const SizedBox(height: 18.0),
+              SizedBox(height: 18.0.h),
               const FormComponent(label: "SENHA", hintText: "Digite sua senha", obscure: true),
-              const SizedBox(height: 18.0),
+              SizedBox(height: 18.0.h),
               ButtonComponent(label: "Criar conta", onTap: () {}),
             ],
           ),

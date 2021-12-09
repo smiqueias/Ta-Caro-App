@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tacaro_app/src/core/theme/app_theme.dart';
 import 'package:tacaro_app/src/utils/extensions/text_extension.dart';
 
@@ -12,9 +13,9 @@ class ButtonComponent extends StatelessWidget {
     return InkWell(
       onTap: onTap,
       child: Container(
-        height: 58,
+        height: 65.h,
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(12.0),
+          borderRadius: BorderRadius.circular(12.0.r),
           color: AppTheme.colors.primary,
         ),
         child: Center(
