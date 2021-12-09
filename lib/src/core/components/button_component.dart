@@ -4,15 +4,13 @@ import 'package:tacaro_app/src/utils/extensions/text_extension.dart';
 
 class ButtonComponent extends StatelessWidget {
   final String label;
-
-  const ButtonComponent({Key? key, required this.label}) : super(key: key);
+  final Function() onTap;
+  const ButtonComponent({Key? key, required this.label, required this.onTap}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {
-        print("Click");
-      },
+      onTap: onTap,
       child: Container(
         height: 58,
         decoration: BoxDecoration(

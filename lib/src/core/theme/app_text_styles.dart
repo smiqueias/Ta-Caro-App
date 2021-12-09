@@ -9,6 +9,8 @@ abstract class AppTextStyle {
   TextStyle get buttonTextStyleColor;
   TextStyle get buttonBoldTextColor;
   TextStyle get buttonTextColor;
+  TextStyle get title;
+  TextStyle get subTitle;
 }
 
 class AppTextStyleImpl implements AppTextStyle {
@@ -51,6 +53,20 @@ class AppTextStyleImpl implements AppTextStyle {
   TextStyle get label => GoogleFonts.inter(
         fontSize: 14,
         color: AppTheme.colors.textColor,
+        fontWeight: FontWeight.bold,
+      );
+
+  @override
+  TextStyle get subTitle => GoogleFonts.inter(
+        fontSize: 14,
+        color: AppTheme.colors.subTitle,
+        fontWeight: FontWeight.bold,
+      );
+
+  @override
+  TextStyle get title => GoogleFonts.inter(
+        fontSize: 22,
+        color: AppTheme.colors.title,
         fontWeight: FontWeight.bold,
       );
 }

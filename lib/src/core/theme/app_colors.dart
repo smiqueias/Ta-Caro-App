@@ -10,7 +10,10 @@ abstract class AppColors {
   Color get iconInactive;
   Color get textColor;
   Color get badColor;
+  Color get backButton;
   Color get border;
+  Color get title;
+  Color get subTitle;
 }
 
 class AppColorsImpl implements AppColors {
@@ -43,4 +46,13 @@ class AppColorsImpl implements AppColors {
 
   @override
   Color get border => const Color(0xFFE9E9EC);
+
+  @override
+  Color get subTitle => const Color(0xFF949B9C);
+
+  @override
+  Color get title => const Color(0xFF1E1F20);
+
+  @override
+  Color get backButton => const Color(0xFF000000);
 }
