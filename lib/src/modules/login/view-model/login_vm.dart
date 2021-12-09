@@ -5,6 +5,8 @@ abstract class LoginVM {
   String get password;
   GlobalKey<FormState> get formKey;
   void onChange({String? email, String? password});
+  bool validate();
+  void login();
 }
 
 class LoginVMImpl implements LoginVM {
@@ -26,4 +28,21 @@ class LoginVMImpl implements LoginVM {
 
   @override
   String get password => _password;
+
+  @override
+  bool validate() {
+    final form = _formKey.currentState!;
+    if (form.validate()) {
+      form.save();
+      return true;
+    }
+    return false;
+  }
+
+  @override
+  void login() {
+    if (validate()) {
+      //call login api
+    }
+  }
 }
