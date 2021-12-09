@@ -26,20 +26,17 @@ class FormComponent extends StatelessWidget {
       children: [
         Text(label).label,
         SizedBox(height: 12.h),
-        SizedBox(
-          height: 55.h,
-          child: TextFormField(
-            onChanged: onChanged,
-            validator: validator,
-            obscureText: obscure,
-            style: AppTheme.textStyles.input,
-            decoration: InputDecoration(
-              hintStyle: AppTheme.textStyles.hint,
-              hintText: hintText,
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(10.r),
-                borderSide: BorderSide(color: AppTheme.colors.border),
-              ),
+        TextFormField(
+          onChanged: onChanged,
+          validator: validator,
+          obscureText: obscure,
+          style: AppTheme.textStyles.input,
+          decoration: InputDecoration(
+            hintStyle: AppTheme.textStyles.hint,
+            hintText: hintText,
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10.r),
+              borderSide: BorderSide(color: AppTheme.colors.border),
             ),
           ),
         )
