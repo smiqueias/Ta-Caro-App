@@ -3,7 +3,7 @@ import 'package:tacaro_app/src/core/components/button_component.dart';
 import 'package:tacaro_app/src/core/theme/app_theme.dart';
 import 'package:tacaro_app/src/modules/login/view/components/form_component.dart';
 import 'package:tacaro_app/src/modules/login/view/components/outline_button_component.dart';
-import 'package:tacaro_app/src/utils/extensions/text_extension.dart';
+import 'package:validators/validators.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -25,13 +25,25 @@ class LoginScreen extends StatelessWidget {
                     width: 223,
                   ),
                 ),
-                const FormComponent(label: "E-mail", hintText: "Digite seu email"),
+                FormComponent(
+                  label: "E-mail",
+                  hintText: "Digite seu email",
+                  validator: (value) => isEmail(value ?? "") ? null : "Digite um e-mail válido",
+                ),
                 const SizedBox(height: 18.0),
-                const FormComponent(label: "Senha", hintText: "Digite sua senha"),
+                FormComponent(
+                  label: "Senha",
+                  hintText: "Digite sua senha",
+                  validator: (value) => isLength(value ?? "", 6) ? null : "Digite uma senha mais forte",
+                  obscure: true,
+                ),
                 const SizedBox(height: 15.0),
-                const ButtonComponent(label: "Entrar"),
+                ButtonComponent(label: "Entrar", onTap: () {}),
                 const SizedBox(height: 58.0),
-                const OutlineButtonComponent()
+                OutlineButtonComponent(
+                  label: "Criar uma conta",
+                  onTap: () => Navigator.pushNamed(context, '/create-account'),
+                )
               ],
             ),
           ),

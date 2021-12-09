@@ -5,8 +5,18 @@ import 'package:tacaro_app/src/utils/extensions/text_extension.dart';
 class FormComponent extends StatelessWidget {
   final String label;
   final String hintText;
+  final bool obscure;
+  final void Function(String)? onChanged;
+  final String? Function(String?)? validator;
 
-  const FormComponent({Key? key, required this.label, required this.hintText}) : super(key: key);
+  const FormComponent({
+    Key? key,
+    required this.label,
+    required this.hintText,
+    this.obscure = false,
+    this.onChanged,
+    this.validator,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -18,6 +28,9 @@ class FormComponent extends StatelessWidget {
         SizedBox(
           height: 47,
           child: TextFormField(
+            onChanged: onChanged,
+            validator: validator,
+            obscureText: obscure,
             style: AppTheme.textStyles.input,
             decoration: InputDecoration(
               hintStyle: AppTheme.textStyles.hint,

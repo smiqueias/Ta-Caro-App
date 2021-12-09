@@ -16,6 +16,7 @@ dependencies:
   # Core
   ###
   google_fonts: ^2.1.0
+  validators: ^3.0.0
 
 dev_dependencies:
   flutter_test:
