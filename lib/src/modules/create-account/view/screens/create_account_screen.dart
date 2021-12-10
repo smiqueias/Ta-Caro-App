@@ -2,14 +2,50 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/src/provider.dart';
 import 'package:tacaro_app/src/core/components/button_component.dart';
+import 'package:tacaro_app/src/core/components/loading_component.dart';
 import 'package:tacaro_app/src/core/theme/app_theme.dart';
 import 'package:tacaro_app/src/modules/create-account/view-model/create_account_vm.dart';
 import 'package:tacaro_app/src/modules/login/view/components/form_component.dart';
 import 'package:tacaro_app/src/utils/extensions/text_extension.dart';
 import 'package:validators/validators.dart';
 
-class CreateAccountScreen extends StatelessWidget {
+class CreateAccountScreen extends StatefulWidget {
   const CreateAccountScreen({Key? key}) : super(key: key);
+
+  @override
+  State<CreateAccountScreen> createState() => _CreateAccountScreenState();
+}
+
+class _CreateAccountScreenState extends State<CreateAccountScreen> {
+  late final CreateAccountVM viewModel;
+  final scaffoldKey = GlobalKey<ScaffoldState>();
+
+  @override
+  void initState() {
+    viewModel = CreateAccountVMImpl();
+    viewModel.addListener(() {
+      viewModel.appState.when(
+        success: (data) => print(data),
+        error: (message, _) => scaffoldKey.currentState!.showBottomSheet(
+          (context) => BottomSheet(
+            onClosing: () {},
+            builder: (context) => Container(
+              height: 100,
+              child: Text(message),
+            ),
+          ),
+        ),
+        orElse: () {},
+      );
+    });
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    viewModel.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -66,11 +102,18 @@ class CreateAccountScreen extends StatelessWidget {
                     },
                   ),
                   SizedBox(height: 18.0.h),
-                  ButtonComponent(
-                      label: "Criar conta",
-                      onTap: () {
-                        viewModel.createAccount();
-                      }),
+                  AnimatedBuilder(
+                    animation: viewModel,
+                    builder: (context, _) => viewModel.appState.when(
+                      loading: () => const LoadingComponent(),
+                      orElse: () => ButtonComponent(
+                        label: "Entrar",
+                        onTap: () {
+                          viewModel.createAccount();
+                        },
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),
