@@ -4,7 +4,7 @@ typedef Success<T> = Function(T data);
 typedef Error = Function(String message, Exception? exception);
 typedef OrElse = Function();
 
-abstract class State {
+abstract class AppState {
   dynamic when({
     Empty? empty,
     Loading? loading,
@@ -19,7 +19,7 @@ abstract class State {
   static error(String message, {Exception? exception}) => StateError(message, exception: exception);
 }
 
-class StateEmpty extends State {
+class StateEmpty extends AppState {
   @override
   when({Empty? empty, Loading? loading, Success? success, Error? error, required OrElse orElse}) {
     if (empty != null) {
@@ -29,7 +29,7 @@ class StateEmpty extends State {
   }
 }
 
-class StateLoading extends State {
+class StateLoading extends AppState {
   @override
   when({Empty? empty, Loading? loading, Success? success, Error? error, required OrElse orElse}) {
     if (loading != null) {
@@ -39,7 +39,7 @@ class StateLoading extends State {
   }
 }
 
-class StateSuccess<T> extends State {
+class StateSuccess<T> extends AppState {
   final T data;
   StateSuccess(this.data);
 
@@ -52,7 +52,7 @@ class StateSuccess<T> extends State {
   }
 }
 
-class StateError extends State {
+class StateError extends AppState {
   final String message;
   final Exception? exception;
 
