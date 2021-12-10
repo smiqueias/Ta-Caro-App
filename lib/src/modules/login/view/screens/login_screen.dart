@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/src/provider.dart';
 import 'package:tacaro_app/src/core/components/button_component.dart';
+import 'package:tacaro_app/src/core/components/loading_component.dart';
 import 'package:tacaro_app/src/core/theme/app_theme.dart';
 import 'package:tacaro_app/src/modules/login/view-model/login_vm.dart';
 import 'package:tacaro_app/src/modules/login/view/components/form_component.dart';
@@ -16,10 +17,41 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  late final LoginVM viewModel;
+  final scaffoldKey = GlobalKey<ScaffoldState>();
+
+  @override
+  void initState() {
+    viewModel = context.read<LoginVM>();
+    viewModel.addListener(() {
+      viewModel.appState.when(
+        success: (data) => print(data),
+        error: (message, _) => scaffoldKey.currentState!.showBottomSheet(
+          (context) => BottomSheet(
+            onClosing: () {},
+            builder: (context) => Container(
+              height: 100,
+              child: Text(message),
+            ),
+          ),
+        ),
+        orElse: () {},
+      );
+    });
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    viewModel.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     final viewModel = context.read<LoginVM>();
     return Scaffold(
+      key: scaffoldKey,
       body: SafeArea(
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 29.0.w),
@@ -51,11 +83,18 @@ class _LoginScreenState extends State<LoginScreen> {
                     onChanged: (value) => viewModel.onChange(password: value),
                   ),
                   SizedBox(height: 18.0.h),
-                  ButtonComponent(
-                      label: "Entrar",
-                      onTap: () {
-                        viewModel.login();
-                      }),
+                  AnimatedBuilder(
+                    animation: viewModel,
+                    builder: (context, _) => viewModel.appState.when(
+                      loading: () => const LoadingComponent(),
+                      orElse: () => ButtonComponent(
+                        label: "Entrar",
+                        onTap: () {
+                          viewModel.login();
+                        },
+                      ),
+                    ),
+                  ),
                   SizedBox(height: 58.0.h),
                   OutlineButtonComponent(
                     label: "Criar uma conta",
