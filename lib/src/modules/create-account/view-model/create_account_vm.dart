@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-abstract class CreateAccountVM {
+abstract class CreateAccountVM extends ChangeNotifier {
   GlobalKey<FormState> get formKey;
   String get email;
   String get password;
@@ -11,7 +11,7 @@ abstract class CreateAccountVM {
   void createAccount();
 }
 
-class CreateAccountVMImpl implements CreateAccountVM {
+class CreateAccountVMImpl extends ChangeNotifier implements CreateAccountVM {
   final _formKey = GlobalKey<FormState>();
   String _email = "";
   String _password = "";

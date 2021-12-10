@@ -5,7 +5,7 @@ import 'package:tacaro_app/src/modules/login/view-model/login_vm.dart';
 
 class AppProviders {
   static List<SingleChildWidget> providers = [
-    Provider<LoginVM>(create: (context) => LoginVMImpl()),
-    Provider<CreateAccountVM>(create: (context) => CreateAccountVMImpl()),
+    ChangeNotifierProvider<LoginVM>(create: (context) => LoginVMImpl()),
+    ChangeNotifierProvider<CreateAccountVM>(create: (context) => CreateAccountVMImpl()),
   ];
 }
