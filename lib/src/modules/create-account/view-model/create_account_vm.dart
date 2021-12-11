@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tacaro_app/src/core/services/app_database.dart';
 import 'package:tacaro_app/src/core/state/app_state.dart';
+import 'package:tacaro_app/src/modules/create-account/repositories/create_account_repository.dart';
 import 'package:tacaro_app/src/utils/log.dart';
 
 abstract class CreateAccountVM extends ChangeNotifier {
@@ -19,10 +20,13 @@ abstract class CreateAccountVM extends ChangeNotifier {
 class CreateAccountVMImpl extends ChangeNotifier implements CreateAccountVM {
   final _formKey = GlobalKey<FormState>();
   AppState _state = AppState.empty();
+  final CreateAccountRepository createAccountRepository;
   String _email = "";
   String _password = "";
   String _confirmPassword = "";
   String _name = "";
+
+  CreateAccountVMImpl({required this.createAccountRepository});
 
   @override
   String get confirmPassword => _confirmPassword;
@@ -65,7 +69,7 @@ class CreateAccountVMImpl extends ChangeNotifier implements CreateAccountVM {
     if (validate()) {
       try {
         update(AppState.loading());
-        await AppDatabase.instance.createAccount(email: _email, password: _password, name: _name);
+        await createAccountRepository.createAccount(email: _email, password: _password, name: _name);
         update(AppState.success<String>("Usuário criado"));
       } catch (error, st) {
         Log.log(

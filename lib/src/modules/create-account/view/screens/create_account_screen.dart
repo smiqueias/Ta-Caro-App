@@ -22,7 +22,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
 
   @override
   void initState() {
-    viewModel = CreateAccountVMImpl();
+    viewModel = context.read<CreateAccountVM>();
     viewModel.addListener(() {
       viewModel.appState.when(
         success: (data) => print(data),
