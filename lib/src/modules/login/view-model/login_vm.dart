@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tacaro_app/src/core/services/app_database.dart';
 import 'package:tacaro_app/src/core/state/app_state.dart';
+import 'package:tacaro_app/src/modules/login/repositories/login_repository.dart';
 import 'package:tacaro_app/src/utils/log.dart';
 
 abstract class LoginVM extends ChangeNotifier {
@@ -17,8 +18,11 @@ abstract class LoginVM extends ChangeNotifier {
 class LoginVMImpl extends ChangeNotifier implements LoginVM {
   AppState _state = AppState.empty();
   final _formKey = GlobalKey<FormState>();
+  final LoginRepository loginRepository;
   String _email = "";
   String _password = "";
+
+  LoginVMImpl({required this.loginRepository});
 
   @override
   String get email => _email;
@@ -53,7 +57,7 @@ class LoginVMImpl extends ChangeNotifier implements LoginVM {
     if (validate()) {
       try {
         update(AppState.loading());
-        await AppDatabase.instance.login(email: _email, password: _password);
+        await loginRepository.login(email: _email, password: _password);
         update(AppState.success<String>("Usuário Logado"));
       } catch (error, st) {
         Log.log(
