@@ -25,7 +25,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
     viewModel = context.read<CreateAccountVM>();
     viewModel.addListener(() {
       viewModel.appState.when(
-        success: (data) => print(data),
+        success: (data) => Navigator.pop(context),
         error: (message, _) => scaffoldKey.currentState!.showBottomSheet(
           (context) => BottomSheet(
             onClosing: () {},

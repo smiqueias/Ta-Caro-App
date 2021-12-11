@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:tacaro_app/src/core/models/user_model.dart';
 
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+  final UserModel user;
+
+  const HomeScreen({Key? key, required this.user}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
       body: Center(
-        child: Text('Home'),
+        child: Text('${user.name}'),
       ),
     );
   }

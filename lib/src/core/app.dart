@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:tacaro_app/src/core/app_providers.dart';
+import 'package:tacaro_app/src/core/models/user_model.dart';
 import 'package:tacaro_app/src/core/theme/app_theme.dart';
 import 'package:tacaro_app/src/modules/create-account/router/create_account_router.dart';
 import 'package:tacaro_app/src/modules/home/router/home_router.dart';
@@ -34,7 +35,9 @@ class App extends StatelessWidget {
             '/splash': (context) => const SplashRouter(),
             '/login': (context) => const LoginRouter(),
             '/create-account': (context) => const CreateAccountRouter(),
-            '/home': (context) => const HomeRouter(),
+            '/home': (context) => HomeRouter(
+                  user: ModalRoute.of(context)!.settings.arguments as UserModel,
+                ),
           },
         ),
       ),
