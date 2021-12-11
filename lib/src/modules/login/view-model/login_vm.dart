@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tacaro_app/src/core/models/user_model.dart';
 import 'package:tacaro_app/src/core/services/app_database.dart';
 import 'package:tacaro_app/src/core/state/app_state.dart';
 import 'package:tacaro_app/src/modules/login/repositories/login_repository.dart';
@@ -57,15 +58,15 @@ class LoginVMImpl extends ChangeNotifier implements LoginVM {
     if (validate()) {
       try {
         update(AppState.loading());
-        await loginRepository.login(email: _email, password: _password);
-        update(AppState.success<String>("Usuário Logado"));
-      } catch (error, st) {
+        final response = await loginRepository.login(email: _email, password: _password);
+        update(AppState.success<UserModel>(response));
+      } on Exception catch (error, st) {
         Log.log(
           "Error in LoginVMImpl.login",
-          error: error,
+          error: error.toString(),
           stackTrace: st,
         );
-        update(AppState.error("Não foi possível realizar login", exception: error as Exception));
+        update(AppState.error(error.toString(), exception: error));
       }
     }
   }

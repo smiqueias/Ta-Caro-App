@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tacaro_app/src/core/models/user_model.dart';
 import 'package:tacaro_app/src/core/services/app_database.dart';
 import 'package:tacaro_app/src/core/state/app_state.dart';
 import 'package:tacaro_app/src/modules/create-account/repositories/create_account_repository.dart';
@@ -69,15 +70,15 @@ class CreateAccountVMImpl extends ChangeNotifier implements CreateAccountVM {
     if (validate()) {
       try {
         update(AppState.loading());
-        await createAccountRepository.createAccount(email: _email, password: _password, name: _name);
-        update(AppState.success<String>("Usuário criado"));
-      } catch (error, st) {
+        final response = await createAccountRepository.createAccount(email: _email, password: _password, name: _name);
+        update(AppState.success<UserModel>(response));
+      } on Exception catch (error, st) {
         Log.log(
           "Error in CreateAccountVMImpl.createAccount",
           error: error,
           stackTrace: st,
         );
-        update(AppState.error("Não foi possível realizar o cadastro", exception: error as Exception));
+        update(AppState.error(error.toString(), exception: error));
       }
     }
   }
