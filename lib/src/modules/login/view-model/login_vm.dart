@@ -59,13 +59,13 @@ class LoginVMImpl extends ChangeNotifier implements LoginVM {
         update(AppState.loading());
         await loginRepository.login(email: _email, password: _password);
         update(AppState.success<String>("Usuário Logado"));
-      } catch (error, st) {
+      } on Exception catch (error, st) {
         Log.log(
           "Error in LoginVMImpl.login",
           error: error,
           stackTrace: st,
         );
-        update(AppState.error("Não foi possível realizar login", exception: error as Exception));
+        update(AppState.error("Não foi possível realizar login", exception: error));
       }
     }
   }
