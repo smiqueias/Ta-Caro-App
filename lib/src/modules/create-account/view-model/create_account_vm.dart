@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tacaro_app/src/core/services/app_database.dart';
 import 'package:tacaro_app/src/core/state/app_state.dart';
 import 'package:tacaro_app/src/utils/log.dart';
 
@@ -64,7 +65,7 @@ class CreateAccountVMImpl extends ChangeNotifier implements CreateAccountVM {
     if (validate()) {
       try {
         update(AppState.loading());
-        await Future.delayed(const Duration(seconds: 4), () {});
+        await AppDatabase.instance.createAccount(email: _email, password: _password, name: _name);
         update(AppState.success<String>("Usuário criado"));
       } catch (error, st) {
         Log.log(
