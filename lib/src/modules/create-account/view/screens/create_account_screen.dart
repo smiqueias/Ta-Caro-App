@@ -29,7 +29,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
         error: (message, _) => scaffoldKey.currentState!.showBottomSheet(
           (context) => BottomSheet(
             onClosing: () {},
-            builder: (context) => Container(
+            builder: (context) => SizedBox(
               height: 100,
               child: Text(message),
             ),
@@ -107,7 +107,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                     builder: (context, _) => viewModel.appState.when(
                       loading: () => const LoadingComponent(),
                       orElse: () => ButtonComponent(
-                        label: "Entrar",
+                        label: "Criar conta",
                         onTap: () {
                           viewModel.createAccount();
                         },

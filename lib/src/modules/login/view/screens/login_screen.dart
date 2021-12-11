@@ -25,11 +25,11 @@ class _LoginScreenState extends State<LoginScreen> {
     viewModel = context.read<LoginVM>();
     viewModel.addListener(() {
       viewModel.appState.when(
-        success: (data) => print(data),
+        success: (data) => Navigator.pushNamed(context, '/home', arguments: data),
         error: (message, _) => scaffoldKey.currentState!.showBottomSheet(
           (context) => BottomSheet(
             onClosing: () {},
-            builder: (context) => Container(
+            builder: (context) => SizedBox(
               height: 100,
               child: Text(message),
             ),
