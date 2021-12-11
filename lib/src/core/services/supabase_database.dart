@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:supabase/supabase.dart';
+import 'package:tacaro_app/src/core/models/user_model.dart';
 import 'package:tacaro_app/src/core/services/app_database.dart';
 
 class SupabaseDatabase implements AppDatabase {
@@ -22,14 +23,22 @@ class SupabaseDatabase implements AppDatabase {
   }
 
   @override
-  Future<bool> createAccount({required String email, required String password, required String name}) async {
+  Future<UserModel> createAccount({required String email, required String password, required String name}) async {
     final response = await client.auth.signUp(email, password);
-    return response.error == null;
+    if (response.error != null) {
+      throw Exception(response.error?.message ?? "Não foi possível criar a conta");
+    }
+    final user = UserModel.fromMap(response.user!.toJson());
+    return user;
   }
 
   @override
-  Future<bool> login({required String email, required String password}) async {
+  Future<UserModel> login({required String email, required String password}) async {
     final response = await client.auth.signIn(email: email, password: password);
-    return response.error == null;
+    if (response.error != null) {
+      throw Exception(response.error?.message ?? "Não foi possível efetuar o login");
+    }
+    final user = UserModel.fromMap(response.user!.toJson());
+    return user;
   }
 }
