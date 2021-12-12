@@ -8,6 +8,7 @@ class FormComponent extends StatelessWidget {
   final String label;
   final String hintText;
   final bool obscure;
+  final Widget? suffixIcon;
   final List<TextInputFormatter>? inputFormatters;
   final TextInputType? keyboardType;
   final void Function(String)? onChanged;
@@ -22,6 +23,7 @@ class FormComponent extends StatelessWidget {
     this.validator,
     this.keyboardType,
     this.inputFormatters,
+    this.suffixIcon,
   }) : super(key: key);
 
   @override
@@ -41,6 +43,7 @@ class FormComponent extends StatelessWidget {
           decoration: InputDecoration(
             hintStyle: AppTheme.textStyles.hint,
             hintText: hintText,
+            suffixIcon: suffixIcon,
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(10.r),
               borderSide: BorderSide(color: AppTheme.colors.border),

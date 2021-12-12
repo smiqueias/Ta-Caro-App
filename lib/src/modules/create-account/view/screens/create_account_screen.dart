@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:provider/src/provider.dart';
 import 'package:tacaro_app/src/core/components/button_component.dart';
 import 'package:tacaro_app/src/core/components/loading_component.dart';
+import 'package:tacaro_app/src/core/services/supabase_database.dart';
 import 'package:tacaro_app/src/core/theme/app_theme.dart';
+import 'package:tacaro_app/src/modules/create-account/repositories/create_account_repository.dart';
 import 'package:tacaro_app/src/modules/create-account/view-model/create_account_vm.dart';
 import 'package:tacaro_app/src/modules/login/view/components/form_component.dart';
 import 'package:tacaro_app/src/utils/extensions/text_extension.dart';
@@ -20,9 +21,24 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
   late final CreateAccountVM viewModel;
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
+  bool obscurePassword = true;
+  bool obscureConfirmPassword = true;
+
+  changeObscurePassword() {
+    setState(() {
+      obscurePassword = !obscurePassword;
+    });
+  }
+
+  changeObscureConfirmPassword() {
+    setState(() {
+      obscureConfirmPassword = !obscureConfirmPassword;
+    });
+  }
+
   @override
   void initState() {
-    viewModel = context.read<CreateAccountVM>();
+    viewModel = CreateAccountVMImpl(createAccountRepository: CreateAccountRepositoryImpl(database: SupabaseDatabase()));
     viewModel.addListener(() {
       viewModel.appState.when(
         success: (data) => Navigator.pop(context),
@@ -49,7 +65,6 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final viewModel = context.read<CreateAccountVM>();
     return Scaffold(
       appBar: AppBar(
         leading: BackButton(color: AppTheme.colors.backButton),
@@ -84,15 +99,29 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                   FormComponent(
                     label: "SENHA",
                     hintText: "Digite sua senha",
-                    obscure: true,
                     onChanged: (value) => viewModel.onChange(password: value),
+                    obscure: obscurePassword,
+                    suffixIcon: IconButton(
+                      icon: Icon(
+                        obscurePassword ? Icons.visibility : Icons.visibility_off,
+                        color: AppTheme.colors.iconInactive,
+                      ),
+                      onPressed: () => changeObscurePassword(),
+                    ),
                     validator: (value) => isLength(value ?? "", 6) ? null : "Digite uma senha mais forte",
                   ),
                   SizedBox(height: 18.0.h),
                   FormComponent(
                     label: "CONFIRMAR SENHA",
                     hintText: "Confirme sua senha",
-                    obscure: true,
+                    obscure: obscureConfirmPassword,
+                    suffixIcon: IconButton(
+                      icon: Icon(
+                        obscureConfirmPassword ? Icons.visibility : Icons.visibility_off,
+                        color: AppTheme.colors.iconInactive,
+                      ),
+                      onPressed: () => changeObscureConfirmPassword(),
+                    ),
                     onChanged: (value) => viewModel.onChange(confirmPassword: value),
                     validator: (value) {
                       if (value != viewModel.password) {

@@ -3,7 +3,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tacaro_app/src/core/components/bottom_navigator_component.dart';
 import 'package:tacaro_app/src/core/models/user_model.dart';
 import 'package:tacaro_app/src/modules/create/view/screens/create_bottomsheet.dart';
-import 'package:tacaro_app/src/modules/feed/view/screens/feed_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   final UserModel user;
@@ -16,6 +15,11 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  @override
+  initState() {
+    super.initState();
+  }
+
   int currentIndex = 0;
   late final List<Widget> screens = widget.screens;
   void changeIndex(int index) async {

@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:provider/src/provider.dart';
 import 'package:tacaro_app/src/core/components/button_component.dart';
 import 'package:tacaro_app/src/core/components/loading_component.dart';
 import 'package:tacaro_app/src/core/services/supabase_database.dart';
 import 'package:tacaro_app/src/core/theme/app_theme.dart';
+import 'package:tacaro_app/src/modules/create/view/screens/create_bottomsheet.dart';
 import 'package:tacaro_app/src/modules/login/repositories/login_repository.dart';
 import 'package:tacaro_app/src/modules/login/view-model/login_vm.dart';
+import 'package:tacaro_app/src/modules/login/view/components/error_bottomsheet.dart';
 import 'package:tacaro_app/src/modules/login/view/components/form_component.dart';
 import 'package:tacaro_app/src/modules/login/view/components/outline_button_component.dart';
 import 'package:validators/validators.dart';
@@ -19,23 +20,32 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  late final LoginVM viewModel;
+  final viewModel = LoginVMImpl(
+    loginRepository: LoginRepositoryImpl(database: SupabaseDatabase()),
+  );
   final scaffoldKey = GlobalKey<ScaffoldState>();
+  bool obscurePassword = true;
+
+  changeObscurePassword() {
+    setState(() {
+      obscurePassword = !obscurePassword;
+    });
+  }
 
   @override
   void initState() {
-    viewModel = context.read<LoginVM>();
     viewModel.addListener(() {
       viewModel.appState.when(
         success: (data) => Navigator.pushNamed(context, '/home', arguments: data),
-        error: (message, _) => scaffoldKey.currentState!.showBottomSheet(
-          (context) => BottomSheet(
-            onClosing: () {},
-            builder: (context) => SizedBox(
-              height: 100,
-              child: Text(message),
+        error: (message, _) => showModalBottomSheet(
+          context: context,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(32.r),
+              topRight: Radius.circular(32.r),
             ),
           ),
+          builder: (context) => const ErrorBottomSheet(),
         ),
         orElse: () {},
       );
@@ -80,7 +90,14 @@ class _LoginScreenState extends State<LoginScreen> {
                     label: "Senha",
                     hintText: "Digite sua senha",
                     validator: (value) => isLength(value ?? "", 6) ? null : "Digite uma senha mais forte",
-                    obscure: true,
+                    obscure: obscurePassword,
+                    suffixIcon: IconButton(
+                      icon: Icon(
+                        obscurePassword ? Icons.visibility : Icons.visibility_off,
+                        color: AppTheme.colors.iconInactive,
+                      ),
+                      onPressed: () => changeObscurePassword(),
+                    ),
                     onChanged: (value) => viewModel.onChange(password: value),
                   ),
                   SizedBox(height: 18.0.h),
