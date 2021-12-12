@@ -11,6 +11,9 @@ abstract class AppTextStyle {
   TextStyle get buttonBoldTextColor;
   TextStyle get buttonTextColor;
   TextStyle get title;
+  TextStyle get chart;
+  TextStyle get titleListTile;
+  TextStyle get subtitleListTile;
   TextStyle get subTitle;
 }
 
@@ -69,5 +72,26 @@ class AppTextStyleImpl implements AppTextStyle {
         fontSize: 25.sp,
         color: AppTheme.colors.title,
         fontWeight: FontWeight.bold,
+      );
+
+  @override
+  TextStyle get chart => GoogleFonts.inter(
+        fontSize: 14.sp,
+        color: AppTheme.colors.textEnabled,
+        fontWeight: FontWeight.bold,
+      );
+
+  @override
+  TextStyle get subtitleListTile => GoogleFonts.inter(
+        fontSize: 14.sp,
+        color: AppTheme.colors.textColor,
+        fontWeight: FontWeight.normal,
+      );
+
+  @override
+  TextStyle get titleListTile => GoogleFonts.inter(
+        fontSize: 16.sp,
+        color: AppTheme.colors.textColor,
+        fontWeight: FontWeight.w500,
       );
 }

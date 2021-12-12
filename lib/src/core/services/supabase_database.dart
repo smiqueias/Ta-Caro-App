@@ -65,4 +65,22 @@ class SupabaseDatabase implements AppDatabase {
     final user = UserModel.fromMap(response.data[0]);
     return user;
   }
+
+  @override
+  Future<bool> create({required String table, required Map<String, dynamic> data}) async {
+    final response = await client.from(table).insert(data).execute();
+    if (response.error != null) {
+      throw Exception(response.error?.message ?? "Não foi possível criar o registro do produto");
+    }
+    return true;
+  }
+
+  @override
+  Future<List<Map<String, dynamic>>> getAll(String table) async {
+    final response = await client.from(table).select("*").order("created").execute();
+    if (response.error != null) {
+      throw Exception(response.error?.message ?? "Não foi possível criar o registro do produto");
+    }
+    return (response.data as List<dynamic>).map((e) => e as Map<String, dynamic>).toList();
+  }
 }

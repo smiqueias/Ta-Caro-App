@@ -38,16 +38,16 @@ class BottomNavigatorComponent extends StatelessWidget {
             ),
             BottomNavigatorIconComponent(
               icon: Icons.add,
-              enable: currentIndex == 1,
+              enable: false,
               onTap: () {
-                onTap(1);
+                onTap(3);
               },
             ),
             BottomNavigatorIconComponent(
               icon: Icons.settings,
-              enable: currentIndex == 2,
+              enable: currentIndex == 1,
               onTap: () {
-                onTap(2);
+                onTap(1);
               },
             ),
           ],

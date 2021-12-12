@@ -3,7 +3,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/src/provider.dart';
 import 'package:tacaro_app/src/core/components/button_component.dart';
 import 'package:tacaro_app/src/core/components/loading_component.dart';
+import 'package:tacaro_app/src/core/services/supabase_database.dart';
 import 'package:tacaro_app/src/core/theme/app_theme.dart';
+import 'package:tacaro_app/src/modules/login/repositories/login_repository.dart';
 import 'package:tacaro_app/src/modules/login/view-model/login_vm.dart';
 import 'package:tacaro_app/src/modules/login/view/components/form_component.dart';
 import 'package:tacaro_app/src/modules/login/view/components/outline_button_component.dart';
@@ -49,7 +51,6 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final viewModel = context.read<LoginVM>();
     return Scaffold(
       key: scaffoldKey,
       body: SafeArea(

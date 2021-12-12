@@ -5,8 +5,10 @@ import 'package:tacaro_app/src/core/app_providers.dart';
 import 'package:tacaro_app/src/core/models/user_model.dart';
 import 'package:tacaro_app/src/core/theme/app_theme.dart';
 import 'package:tacaro_app/src/modules/create-account/router/create_account_router.dart';
+import 'package:tacaro_app/src/modules/feed/view/container/feed_container.dart';
 import 'package:tacaro_app/src/modules/home/router/home_router.dart';
 import 'package:tacaro_app/src/modules/login/router/login_router.dart';
+import 'package:tacaro_app/src/modules/profile/view/container/profile_container.dart';
 import 'package:tacaro_app/src/modules/splash/router/splash_router.dart';
 
 class App extends StatelessWidget {
@@ -37,6 +39,7 @@ class App extends StatelessWidget {
             '/create-account': (context) => const CreateAccountRouter(),
             '/home': (context) => HomeRouter(
                   user: ModalRoute.of(context)!.settings.arguments as UserModel,
+                  screens: const [FeedContainer(), ProfileContainer()],
                 ),
           },
         ),

@@ -17,7 +17,7 @@ abstract class LoginVM extends ChangeNotifier {
 
 class LoginVMImpl extends ChangeNotifier implements LoginVM {
   AppState _state = AppState.empty();
-  final _formKey = GlobalKey<FormState>();
+  static final _formKey = GlobalKey<FormState>();
   final LoginRepository loginRepository;
   String _email = "";
   String _password = "";

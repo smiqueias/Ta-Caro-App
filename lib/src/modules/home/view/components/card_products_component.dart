@@ -1,16 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:tacaro_app/src/core/models/product_model.dart';
 import 'package:tacaro_app/src/core/theme/app_theme.dart';
 
 class CardProductsComponent extends StatelessWidget {
-  const CardProductsComponent({Key? key}) : super(key: key);
+  final ProductModel product;
+
+  const CardProductsComponent({Key? key, required this.product}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: EdgeInsets.only(left: 16.w),
       child: Container(
-        width: 230.w,
+        width: 250.w,
         decoration: BoxDecoration(
           color: AppTheme.colors.textEnabled,
           borderRadius: BorderRadius.circular(12.r),
@@ -21,10 +25,21 @@ class CardProductsComponent extends StatelessWidget {
               leading: CircleAvatar(
                 backgroundColor: AppTheme.colors.background,
                 radius: 30.r,
-                child: const Icon(Icons.linked_camera),
+                child: product.currentPrice < product.lastPrice
+                    ? const Icon(FontAwesomeIcons.thumbsUp)
+                    : Icon(
+                        FontAwesomeIcons.thumbsDown,
+                        color: AppTheme.colors.badColor,
+                      ),
               ),
-              title: const Text("Carne 1Kg"),
-              subtitle: const Text("R\$ 8,00"),
+              title: Text(
+                product.name,
+                style: AppTheme.textStyles.titleListTile,
+              ),
+              subtitle: Text(
+                "Estava R\$ ${product.lastPrice.toStringAsFixed(2)}",
+                style: AppTheme.textStyles.subtitleListTile,
+              ),
               trailing: PopupMenuButton(
                 itemBuilder: (context) => [
                   const PopupMenuItem(child: Text("Editar")),
@@ -32,12 +47,19 @@ class CardProductsComponent extends StatelessWidget {
                 ],
               ),
             ),
-            const Text.rich(
-              TextSpan(
-                text: "Agora\n",
-                children: [
-                  TextSpan(text: "R\$ 67,50"),
-                ],
+            Padding(
+              padding: EdgeInsets.only(left: 25.w),
+              child: Text.rich(
+                TextSpan(
+                  text: "Agora\n",
+                  style: AppTheme.textStyles.subtitleListTile,
+                  children: [
+                    TextSpan(
+                      text: "R\$ ${product.currentPrice.toStringAsFixed(2)}",
+                      style: AppTheme.textStyles.title,
+                    ),
+                  ],
+                ),
               ),
             )
           ],
